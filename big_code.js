@@ -63,7 +63,6 @@ y_end.addEventListener("change", () => {
     testmaze.build_grid();
     test_tiles.end_tile();
 });
-
 class Maze{
     constructor(){
 
@@ -81,8 +80,18 @@ class Maze{
                 this.table_column.id = x + "," + y;
                 this.table_row.appendChild(this.table_column);
                 this.table_column.innerHTML = x + "," + y;
+                this.table_column.addEventListener("click", (event) => {
+                    if (event.target.className == ""){
+                        event.target.className = "wall";
+                    }
+                    else if (event.target.className == "wall"){
+                        event.target.className = "";
+                    }
+                });
             }
         }
+        test_tiles.start_tile();
+        test_tiles.end_tile();
     }
     demolish_grid(){
         grid.removeChild(this.create_table);
