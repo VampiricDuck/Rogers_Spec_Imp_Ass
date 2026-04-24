@@ -13,6 +13,7 @@ x_start.value = 1;
 y_start.value = 1;
 x_end.value = x_length.value;
 y_end.value = y_length.value;
+
 // x_length.addEventListener("change", () => {
 //     });
 // y_length.addEventListener("change", () => {
@@ -27,6 +28,7 @@ x_start.addEventListener("change", () => {
     }
     testmaze.demolish_grid();
     testmaze.build_grid();
+    test_tiles.start_tile();
     });
 y_start.addEventListener("change", () => {
     if (y_start.value > y_length.value){ 
@@ -37,6 +39,7 @@ y_start.addEventListener("change", () => {
     }
     testmaze.demolish_grid();
     testmaze.build_grid();
+    test_tiles.start_tile();
 });
 x_end.addEventListener("change", () => {
     if (x_end.value > x_length.value){ 
@@ -47,7 +50,8 @@ x_end.addEventListener("change", () => {
     }
     testmaze.demolish_grid();
     testmaze.build_grid();
-    });
+    test_tiles.end_tile();
+});
 y_end.addEventListener("change", () => {
     if (y_end.value > y_length.value){ 
         y_end.value = y_length.value;
@@ -57,6 +61,7 @@ y_end.addEventListener("change", () => {
     }
     testmaze.demolish_grid();
     testmaze.build_grid();
+    test_tiles.end_tile();
 });
 
 class Maze{
@@ -67,11 +72,11 @@ class Maze{
         this.create_table = document.createElement("table");
         this.create_table.id = "table";
         grid.appendChild(this.create_table);
-        for(let y=0; y<=y_length.value; y++){
+        for(let y=1;  y <= y_length.value; y++){
             this.table_row = document.createElement("tr");
             this.table_row.id = y;
             this.create_table.appendChild(this.table_row);
-            for(let x=0; x<=x_length.value; x++){
+            for(let x=1; x<=x_length.value; x++){
                 this.table_column = document.createElement("td");
                 this.table_column.id = x + "," + y;
                 this.table_row.appendChild(this.table_column);
@@ -89,10 +94,15 @@ class tiles extends Maze{
         super();
     }
     start_tile(){
-        
+        document.getElementById(x_start.value + "," + y_start.value).className = "start";
+    }
+    end_tile(){
+        document.getElementById(x_end.value + "," + y_end.value).className = "end";
     }
 }
 
 testmaze = new Maze() 
-
+test_tiles = new tiles()
 testmaze.build_grid()
+test_tiles.start_tile()
+test_tiles.end_tile()
